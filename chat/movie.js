@@ -80,8 +80,6 @@ alert("비밀번호가 틀린데요??.");
 }
 }
 
-let sortOnOff = 0;
-
 function displayComments() {
 const commentList = document.getElementById("commentList");
 commentList.innerHTML = "";
@@ -89,10 +87,6 @@ commentList.innerHTML = "";
 let comments = [];
 if (localStorage.getItem(movieId)) {
 comments = JSON.parse(localStorage.getItem(movieId));
-}
-
-if (sortOnOff == 1) {
-comments.reverse();
 }
 
 comments.forEach((comment, index) => {
@@ -121,17 +115,6 @@ commentElement.appendChild(deleteButton);
 commentList.appendChild(commentElement);
 });
 }
-
-const sortOn = document.querySelector("#sortOn");
-
-sortOn.addEventListener("click", () => {
-if (sortOnOff == 0) {
-sortOnOff = 1;
-} else {
-sortOnOff = 0;
-}
-displayComments();
-});
 
 displayComments();
 
