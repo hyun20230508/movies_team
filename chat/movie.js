@@ -39,23 +39,23 @@ function addComment(event) {
     };
 
     let movieId = [];
-    if (localStorage.getItem('movieId')) {
-        movieId = JSON.parse(localStorage.getItem('movieId'));
+    if (localStorage.getItem(movieId)) {
+        movieId = JSON.parse(localStorage.getItem(movieId));
     }
 
     movieId.push(comment);
-    localStorage.setItem('movieId', JSON.stringify(movieId));
+    localStorage.setItem(movieId, JSON.stringify(movieId));
 
     displaymovieId();
 }
 
 function deleteComment(index) {
     const commentPassword = prompt('댓글 삭제를 위해 비밀번호를 입력하세요:');
-    const movieId = JSON.parse(localStorage.getItem('movieId'));
+    const movieId = JSON.parse(localStorage.getItem(movieId));
 
     if (commentPassword === movieId[index].password) {
         movieId.splice(index, 1);
-        localStorage.setItem('movieId', JSON.stringify(movieId));
+        localStorage.setItem(movieId, JSON.stringify(movieId));
         displaymovieId();
     } else {
         alert('비밀번호가 일치하지 않습니다.');
@@ -67,8 +67,8 @@ function displaymovieId() {
     commentList.innerHTML = '';
 
     let movieId = [];
-    if (localStorage.getItem('movieId')) {
-        movieId = JSON.parse(localStorage.getItem('movieId'));
+    if (localStorage.getItem(movieId)) {
+        movieId = JSON.parse(localStorage.getItem(movieId));
     }
 
     movieId.forEach((comment, index) => {
