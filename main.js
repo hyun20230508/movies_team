@@ -38,7 +38,7 @@ fetch(
           movieElement.className = "movieCard";
           movieElement.innerHTML = `
                       <div onclick="movieId(${id})">
-                      <a href="work/review.html"><img id ="image" src="https://image.tmdb.org/t/p/w300/${poster_path}"><a>
+                      <a href="chat/movie.html?id=${id}"><img id ="image" src="https://image.tmdb.org/t/p/w300/${poster_path}"><a>
                           <p>${title}</p>
                           <p>${overview}</p>
                           <p>Rating : ${vote_average}</p>
@@ -65,4 +65,3 @@ fetch(
   .catch((err) => console.error(err));
 // 영화포스터를 클릭시 id값을 출력하게 해놓았다...!!
 const movieId = (id) => alert(`영화 id : ${id}`);
-
