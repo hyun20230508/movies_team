@@ -38,40 +38,54 @@ function addComment(event) {
         content: commentContent
     };
 
-    let movieId = [];
+    let comments = [];
     if (localStorage.getItem(movieId)) {
-        movieId = JSON.parse(localStorage.getItem(movieId));
+        comments = JSON.parse(localStorage.getItem(movieId));
     }
 
-    movieId.push(comment);
-    localStorage.setItem(movieId, JSON.stringify(movieId));
+    comments.push(comment);
+    localStorage.setItem(movieId, JSON.stringify(comments));
 
-    displaymovieId();
+    displayComments();
 }
 
 function deleteComment(index) {
     const commentPassword = prompt('댓글 삭제를 위해 비밀번호를 입력하세요:');
-    const movieId = JSON.parse(localStorage.getItem(movieId));
+    let comments = JSON.parse(localStorage.getItem(movieId));
 
-    if (commentPassword === movieId[index].password) {
-        movieId.splice(index, 1);
-        localStorage.setItem(movieId, JSON.stringify(movieId));
-        displaymovieId();
+    if (commentPassword === comments[index].password) {
+        comments.splice(index, 1);
+        localStorage.setItem(movieId, JSON.stringify(comments));
+        displayComments();
     } else {
         alert('비밀번호가 일치하지 않습니다.');
     }
 }
 
-function displaymovieId() {
+function editComment(index) {
+    const commentPassword = prompt('댓글 수정을 위해 비밀번호를 입력해볼까요?:');
+    let comments = JSON.parse(localStorage.getItem(movieId));
+
+    if (commentPassword === comments[index].password) {
+        const newContent = prompt('수정할 내용을 입력해볼까요?:', comments[index].content);
+        comments[index].content = newContent;
+        localStorage.setItem(movieId, JSON.stringify(comments));
+        displayComments();
+    } else {
+        alert('비밀번호가 틀린데요??.');
+    }
+}
+
+function displayComments() {
     const commentList = document.getElementById('commentList');
     commentList.innerHTML = '';
 
-    let movieId = [];
+    let comments = [];
     if (localStorage.getItem(movieId)) {
-        movieId = JSON.parse(localStorage.getItem(movieId));
+        comments = JSON.parse(localStorage.getItem(movieId));
     }
 
-    movieId.forEach((comment, index) => {
+    comments.forEach((comment, index) => {
         const commentElement = document.createElement('div');
         commentElement.classList.add('comment');
 
@@ -81,16 +95,21 @@ function displaymovieId() {
         const contentElement = document.createElement('p');
         contentElement.innerText = `내용: ${comment.content}`;
 
+        const editButton = document.createElement('button');
+        editButton.innerText = '수정';
+        editButton.addEventListener('click', () => editComment(index));
+
         const deleteButton = document.createElement('button');
         deleteButton.innerText = '삭제';
         deleteButton.addEventListener('click', () => deleteComment(index));
 
         commentElement.appendChild(authorElement);
         commentElement.appendChild(contentElement);
+        commentElement.appendChild(editButton);
         commentElement.appendChild(deleteButton);
 
         commentList.appendChild(commentElement);
     });
 }
 
-displaymovieId();
+displayComments();
