@@ -27,28 +27,32 @@ posterImg.src = `https://image.tmdb.org/t/p/w500/${data.poster_path}`;
 .catch((err) => console.error(err));
 
 function addComment(event) {
-event.preventDefault();
+    event.preventDefault();
+    
+    const commentAuthor = document.getElementById("commentAuthor");
+    const commentPassword = document.getElementById("commentPassword");
+    const commentContent = document.getElementById("commentContent");
+    
+    const comment = {
+    author: commentAuthor.value,
+    password: commentPassword.value,
+    content: commentContent.value,
+    };
+    
+    let comments = [];
+    if (localStorage.getItem(movieId)) {
+    comments = JSON.parse(localStorage.getItem(movieId));
+    }
+    
+    commentAuthor.value = "";
+    commentPassword.value = "";
+    commentContent.value = "";
+    comments.push(comment);
+    localStorage.setItem(movieId, JSON.stringify(comments));
+    
+    displayComments();
+    }
 
-const commentAuthor = document.getElementById("commentAuthor").value;
-const commentPassword = document.getElementById("commentPassword").value;
-const commentContent = document.getElementById("commentContent").value;
-
-const comment = {
-author: commentAuthor,
-password: commentPassword,
-content: commentContent,
-};
-
-let comments = [];
-if (localStorage.getItem(movieId)) {
-comments = JSON.parse(localStorage.getItem(movieId));
-}
-
-comments.push(comment);
-localStorage.setItem(movieId, JSON.stringify(comments));
-
-displayComments();
-}
 
 function deleteComment(index) {
 const commentPassword = prompt("댓글 삭제를 위해 비밀번호를 입력하세요:");
